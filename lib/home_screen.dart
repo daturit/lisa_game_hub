@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
+import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
+import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -91,12 +93,12 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (type == 'merge') {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => SelectMultipleFilesScreen(type: type),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PianoGamePage(AppData.mainMusic),
+            ),
+          );
         } else {
           Navigator.push(
             context,

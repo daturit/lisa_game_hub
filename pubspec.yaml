@@ -17,6 +17,9 @@ dependencies:
   flutter_share: ^2.0.0
   material_segmented_control: ^5.0.1
   url_launcher: ^6.3.2
+  assets_audio_player: ^3.1.1
+  awesome_dialog: ^3.2.1
+  game_levels_scrolling_map: ^0.0.7
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +34,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image2048/
+    - assets/images/
+    - assets/drawable/map_vertical.png
+    - assets/drawable/map_vertical_point.png
+    - assets/drawable/map_horizontal.png
+    - assets/drawable/map_horizontal_point.png
+    - assets/svg/map_vertical.svg
+    - assets/svg/map_horizontal.svg
+    - assets/musics/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

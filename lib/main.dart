@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 
+
+bool isRemoveAds = false;
+int globalPoint = 0;
+int highScore = 0;
+
 void main() {
   runApp(const MyApp());
 }
