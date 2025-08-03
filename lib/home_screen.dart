@@ -137,13 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context) => PianoGamePage(AppData.mainMusic),
             ),
           );
+        } else if (type == "sign") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Game2048Screen()),
+          );
         } else {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => Game2048Screen(),
-          //   ),
-          // );
           _navigateToGamePage(context, 0);
         }
       },
@@ -193,24 +192,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   void _navigateToGamePage(BuildContext context, int index) async {
-    // random data for daily
     final int randomValue = random.nextInt(listCategoryDaily.length - 1);
     print("value random $randomValue");
     await Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => MainPageIntro()),
+      MaterialPageRoute(builder: (context) => MainPageIntro()),
     );
-    //   MaterialPageRoute(
-    //       builder: (context) => GameWidget(
-    //           category: "",
-    //           words: allWords[randomValue],
-    //           numberCol: numberCol,
-    //           numberPuzzle: 100)),
-    // );
     setState(() {});
   }
 }

@@ -4,7 +4,6 @@ import 'package:lisa_game_hub/word_finder/main_page_intro.dart';
 import '../main.dart';
 import 'data_helper.dart';
 import 'database_helper.dart';
-import 'game_widget.dart';
 import 'helper.dart';
 
 class MainPage extends StatefulWidget {
