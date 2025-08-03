@@ -1,10 +1,48 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
 import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
 import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
+import 'package:lisa_game_hub/word_finder/data_helper.dart';
+import 'package:lisa_game_hub/word_finder/database_helper.dart';
+import 'package:lisa_game_hub/word_finder/game_widget.dart';
+import 'package:lisa_game_hub/word_finder/main_page_intro.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<List<AWord>> allWords = [];
+  final numberCol = 12;
+  Random random = Random();
+
+  @override
+  void initState() {
+    _initializeDatabase(numberCol, listCategoryDaily);
+    super.initState();
+  }
+
+  Future _initializeDatabase(int level, List<List<String>> listPuzzle) async {
+    final List<ACategory> list = [];
+    final List<List<String>> listCategoryTemp = listPuzzle;
+    final List<String> catsTemp = cats;
+
+    for (int i = 0; i < listCategoryTemp.length; i++) {
+      list.add(ACategory(catsTemp[i]));
+    }
+    for (int i = 0; i < listCategoryTemp.length; i++) {
+      final List<AWord> listWord = [];
+      for (int j = 0; j < listCategoryTemp[i].length; j++) {
+        listWord.add(AWord(catsTemp[i], listCategoryTemp[i][j].toString()));
+      }
+      allWords.add(listWord);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +138,13 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Game2048Screen(),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => Game2048Screen(),
+          //   ),
+          // );
+          _navigateToGamePage(context, 0);
         }
       },
       child: Container(
@@ -152,5 +191,26 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  void _navigateToGamePage(BuildContext context, int index) async {
+    // random data for daily
+    final int randomValue = random.nextInt(listCategoryDaily.length - 1);
+    print("value random $randomValue");
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MainPageIntro()),
+    );
+    //   MaterialPageRoute(
+    //       builder: (context) => GameWidget(
+    //           category: "",
+    //           words: allWords[randomValue],
+    //           numberCol: numberCol,
+    //           numberPuzzle: 100)),
+    // );
+    setState(() {});
   }
 }
