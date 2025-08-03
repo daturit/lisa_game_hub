@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
 import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
 import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
+import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
 import 'package:lisa_game_hub/word_finder/database_helper.dart';
 import 'package:lisa_game_hub/word_finder/game_widget.dart';
@@ -138,9 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         } else if (type == "sign") {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => Game2048Screen()),
+          // );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Game2048Screen()),
+            MaterialPageRoute(builder: (context) => LoginScreen()),
           );
         } else {
           _navigateToGamePage(context, 0);
