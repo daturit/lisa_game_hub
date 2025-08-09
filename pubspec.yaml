@@ -23,6 +23,8 @@ dependencies:
   giffy_dialog: ^2.0.0+2
   google_fonts: ^4.0.3
   auto_size_text: ^3.0.0
+  # Sudoku Logic
+  sudoku_solver_generator: ^2.1.0+1
 
 dev_dependencies:
   flutter_test:

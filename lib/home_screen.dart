@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
 import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
 import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
+import 'package:lisa_game_hub/sudoku/sudoku_game_screen.dart';
 import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
 import 'package:lisa_game_hub/word_finder/database_helper.dart';
@@ -144,24 +145,30 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             MaterialPageRoute(builder: (context) => Game2048Screen()),
           );
-        } else if (type == "pdftoimage"){
+        } else if (type == "pdftoimage") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen(isSingleMode: true)),
+            MaterialPageRoute(
+              builder: (context) => LoginScreen(isSingleMode: true),
+            ),
           );
-
-        } else if (type == "view"){
+        } else if (type == "view") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen(isSingleMode: false)),
+            MaterialPageRoute(
+              builder: (context) => LoginScreen(isSingleMode: false),
+            ),
           );
-        } else if (type == "slip"){
-
+        } else if (type == "slip") {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => GameActivity()),
           );
-
+        } else if (type == "pdftoimage1") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SudokuGame()),
+          );
         } else {
           _navigateToGamePage(context, 0);
         }
