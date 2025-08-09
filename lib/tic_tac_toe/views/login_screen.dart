@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +8,9 @@ import 'game_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = 'Login';
+  final bool isSingleMode;
 
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.isSingleMode});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,19 @@ class LoginScreen extends StatelessWidget {
       create: (context) => LoginViewModel(),
       child: Consumer<LoginViewModel>(
         builder: (context, loginViewModel, _) {
+          loginViewModel.switchValue = isSingleMode;
           return Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Tic Tac Toe',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.deepPurple,
+            ),
             backgroundColor: AppConstants.bgColor,
             body: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -46,23 +58,23 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Single Player',
-                            style: AppConstants.customFontWhite.copyWith(
-                              fontSize: 14,
-                            ),
-                          ),
-                          CupertinoSwitch(
-                            value: loginViewModel.switchValue,
-                            onChanged: (value) {
-                              loginViewModel.onSwitchValueChanged(value);
-                            },
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     Text(
+                      //       'Single Player',
+                      //       style: AppConstants.customFontWhite.copyWith(
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //     CupertinoSwitch(
+                      //       value: loginViewModel.switchValue,
+                      //       onChanged: (value) {
+                      //         loginViewModel.onSwitchValueChanged(value);
+                      //       },
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 15),
                       Visibility(
                         visible: !loginViewModel.switchValue,
@@ -106,7 +118,8 @@ class LoginScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => TicGameScreen(player: playerModel),
+                              builder: (context) =>
+                                  TicGameScreen(player: playerModel),
                             ),
                           );
                         },

@@ -7,8 +7,9 @@ import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
 import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
 import 'package:lisa_game_hub/word_finder/database_helper.dart';
-import 'package:lisa_game_hub/word_finder/game_widget.dart';
 import 'package:lisa_game_hub/word_finder/main_page_intro.dart';
+
+import 'minesweeper1/game_activity.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Map<String, dynamic>> toolsConvert = [
       {"icon": Icons.image, "label": "PDF to Image", "type": "pdftoimage"},
       {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip"},
-      {"icon": Icons.image, "label": "PDF to Image", "type": "pdftoimage"},
-      {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip"},
+      {"icon": Icons.image, "label": "PDF to Image", "type": "pdftoimage1"},
+      {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip1"},
     ];
 
     return Scaffold(
@@ -139,14 +140,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         } else if (type == "sign") {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => Game2048Screen()),
-          // );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => Game2048Screen()),
           );
+        } else if (type == "pdftoimage"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen(isSingleMode: true)),
+          );
+
+        } else if (type == "view"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen(isSingleMode: false)),
+          );
+        } else if (type == "slip"){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => GameActivity()),
+          );
+
         } else {
           _navigateToGamePage(context, 0);
         }
