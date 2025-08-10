@@ -5,6 +5,7 @@ import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
 import 'package:lisa_game_hub/minesweeper1/game_activity.dart';
 import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
 import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
+import 'package:lisa_game_hub/settings/setting_screen.dart';
 import 'package:lisa_game_hub/sudoku/sudoku_game_screen.dart';
 import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
@@ -29,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _initializeDatabase(numberCol, listCategoryDaily);
   }
 
-  Future<void> _initializeDatabase(int level, List<List<String>> listPuzzle) async {
+  Future<void> _initializeDatabase(
+    int level,
+    List<List<String>> listPuzzle,
+  ) async {
     final List<String> catsTemp = cats;
 
     for (int i = 0; i < listPuzzle.length; i++) {
@@ -92,8 +96,23 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text(
           'Games Offline',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+            icon: const Icon(Icons.settings, color: Colors.white),
+          ),
+        ],
         backgroundColor: Colors.deepPurple,
       ),
       body: SafeArea(
@@ -117,7 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -153,8 +175,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Icon(iconData, size: 36, color: Colors.blueAccent),
             const SizedBox(height: 8),
-            Text(label, textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
       ),
