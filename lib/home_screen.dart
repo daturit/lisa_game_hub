@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
 import 'package:lisa_game_hub/minesweeper1/game_activity.dart';
@@ -11,6 +12,8 @@ import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
 import 'package:lisa_game_hub/word_finder/database_helper.dart';
 import 'package:lisa_game_hub/word_finder/main_page_intro.dart';
+
+import 'admod/app_open_ad_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,8 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
   final numberCol = 12;
   final random = Random();
 
+  final InAppReview _inAppReview = InAppReview.instance;
+
   @override
   void initState() {
+    _inAppReview.requestReview();
+    AppOpenAdManager().loadAd();
+    Future.delayed(const Duration(seconds: 3), () {
+      AppOpenAdManager().showAdIfAvailable();
+    });
     super.initState();
     _initializeDatabase(numberCol, listCategoryDaily);
   }

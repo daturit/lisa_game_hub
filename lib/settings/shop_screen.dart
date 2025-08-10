@@ -17,9 +17,9 @@ const yearly = "19.99USD";
 const monthly = "4.99USD";
 const weekly = "2.99USD";
 
-const String _kUpgradeId = 'lisa.scanner.weekly';
-const String _kSilverSubscriptionId = 'lisa.scanner.monthly';
-const String _kGoldSubscriptionId = 'lisa.scanner.yearly';
+const String _kUpgradeId = 'lisa.offline.weekly';
+const String _kSilverSubscriptionId = 'lisa.offline.monthly';
+const String _kGoldSubscriptionId = 'lisa.offline.yearly';
 const List<String> _kProductIds = <String>[
   _kUpgradeId,
   _kSilverSubscriptionId,

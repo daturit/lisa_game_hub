@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'home_screen.dart';
 
 List<List<String>> gridMap = [];
@@ -17,7 +18,9 @@ bool isRemoveAds = false;
 int globalPoint = 0;
 int highScore = 0;
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
