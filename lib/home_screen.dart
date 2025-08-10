@@ -50,17 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> tools = [
-      {"icon": Icons.edit, "label": "Sign", "type": "sign"},
-      {"icon": Icons.merge, "label": "Merge to PDF", "type": "merge"},
-      {"icon": Icons.edit_note, "label": "Edit PDF", "type": "edit"},
-      {"icon": Icons.view_compact_alt, "label": "View PDF", "type": "view"},
+      {"icon": Icons.edit, "label": "2048", "type": "sign"},
+      {"icon": Icons.merge, "label": "Minesweeper", "type": "merge"},
+      {"icon": Icons.edit_note, "label": "Sudoku", "type": "edit"},
+      {"icon": Icons.view_compact_alt, "label": "Word Finder", "type": "view"},
     ];
 
     final List<Map<String, dynamic>> toolsConvert = [
-      {"icon": Icons.image, "label": "PDF to Image", "type": "pdftoimage"},
-      {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip"},
-      {"icon": Icons.image, "label": "PDF to Image", "type": "pdftoimage1"},
-      {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip1"},
+      {"icon": Icons.image, "label": "Tic tac toe", "type": "pdftoimage"},
+      {"icon": Icons.device_hub, "label": "Piano Music", "type": "slip"},
+      {"icon": Icons.image, "label": "Tic tac toe", "type": "pdftoimage1"},
+      // {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip1"},
     ];
 
     return Scaffold(
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 28),
               const Text(
-                'Music Games',
+                'Casual Games',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
