@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "view-kids-playing-video-games-together.jpg",
+      "filename" : "background1.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "view-kids-playing-video-games-together 1.jpg",
+      "filename" : "background1 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "view-kids-playing-video-games-together 2.jpg",
+      "filename" : "background1 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

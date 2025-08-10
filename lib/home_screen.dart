@@ -52,22 +52,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final puzzleGames = [
       {
-        "icon": Icons.edit,
+        "icon": "assets/images/2048.png",
         "label": "2048",
         "onTap": () => _goTo(context, const Game2048Screen()),
       },
       {
-        "icon": Icons.merge,
+        "icon": "assets/images/minesweeper.png",
         "label": "Minesweeper",
         "onTap": () => _goTo(context, GameActivity()),
       },
       {
-        "icon": Icons.edit_note,
+        "icon": "assets/images/sudoku.png",
         "label": "Sudoku",
         "onTap": () => _goTo(context, const SudokuGame()),
       },
       {
-        "icon": Icons.view_compact_alt,
+        "icon": "assets/images/worksearch.png",
         "label": "Word Finder",
         "onTap": () => _goTo(context, const MainPageIntro()),
       },
@@ -75,17 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final casualGames = [
       {
-        "icon": Icons.image,
+        "icon": "assets/images/tictactoe.png",
         "label": "Tic tac toe (1P)",
         "onTap": () => _goTo(context, const LoginScreen(isSingleMode: true)),
       },
       {
-        "icon": Icons.device_hub,
+        "icon": "assets/images/piano.png",
         "label": "Piano Music",
         "onTap": () => _goTo(context, PianoGamePage(AppData.mainMusic)),
       },
       {
-        "icon": Icons.image,
+        "icon": "assets/images/tictactoe.png",
         "label": "Tic tac toe (2P)",
         "onTap": () => _goTo(context, const LoginScreen(isSingleMode: false)),
       },
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisCount: 2,
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
-        childAspectRatio: 1,
+        childAspectRatio: 0.69,
       ),
       itemBuilder: (context, index) {
         final game = games[index];
@@ -161,30 +161,50 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildGameCard(String label, IconData iconData, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(iconData, size: 36, color: Colors.blueAccent),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+  Widget _buildGameCard(String label, String imagePath, VoidCallback onTap) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double itemSize = constraints.maxWidth;
+
+        return GestureDetector(
+          onTap: onTap,
+          child: Container(
+            decoration: BoxDecoration(
+              // color: Colors.grey.shade100,
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
             ),
-          ],
-        ),
-      ),
+            padding: const EdgeInsets.all(1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded( // để ảnh chiếm toàn bộ khoảng trống phía trên
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      imagePath,
+                      width: itemSize,
+                      fit: BoxFit.cover, // nếu muốn ảnh tràn hết
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
+
 
   void _goTo(BuildContext context, Widget page) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => page));
