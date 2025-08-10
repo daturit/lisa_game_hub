@@ -1,7 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
 import 'package:lisa_game_hub/2048_game/game_2048_screen.dart';
+import 'package:lisa_game_hub/minesweeper1/game_activity.dart';
 import 'package:lisa_game_hub/piano_music/core_tiles/app_data.dart';
 import 'package:lisa_game_hub/piano_music/utils_game/piano_game_page.dart';
 import 'package:lisa_game_hub/sudoku/sudoku_game_screen.dart';
@@ -9,8 +10,6 @@ import 'package:lisa_game_hub/tic_tac_toe/views/login_screen.dart';
 import 'package:lisa_game_hub/word_finder/data_helper.dart';
 import 'package:lisa_game_hub/word_finder/database_helper.dart';
 import 'package:lisa_game_hub/word_finder/main_page_intro.dart';
-
-import 'minesweeper1/game_activity.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,45 +21,70 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<List<AWord>> allWords = [];
   final numberCol = 12;
-  Random random = Random();
+  final random = Random();
 
   @override
   void initState() {
-    _initializeDatabase(numberCol, listCategoryDaily);
     super.initState();
+    _initializeDatabase(numberCol, listCategoryDaily);
   }
 
-  Future _initializeDatabase(int level, List<List<String>> listPuzzle) async {
-    final List<ACategory> list = [];
-    final List<List<String>> listCategoryTemp = listPuzzle;
+  Future<void> _initializeDatabase(int level, List<List<String>> listPuzzle) async {
     final List<String> catsTemp = cats;
 
-    for (int i = 0; i < listCategoryTemp.length; i++) {
-      list.add(ACategory(catsTemp[i]));
-    }
-    for (int i = 0; i < listCategoryTemp.length; i++) {
-      final List<AWord> listWord = [];
-      for (int j = 0; j < listCategoryTemp[i].length; j++) {
-        listWord.add(AWord(catsTemp[i], listCategoryTemp[i][j].toString()));
-      }
-      allWords.add(listWord);
+    for (int i = 0; i < listPuzzle.length; i++) {
+      final words = listPuzzle[i]
+          .map((word) => AWord(catsTemp[i], word.toString()))
+          .toList();
+      allWords.add(words);
     }
   }
+
+  // Danh sách game
+  final List<Map<String, dynamic>> puzzleGames = [];
+  final List<Map<String, dynamic>> casualGames = [];
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> tools = [
-      {"icon": Icons.edit, "label": "2048", "type": "sign"},
-      {"icon": Icons.merge, "label": "Minesweeper", "type": "merge"},
-      {"icon": Icons.edit_note, "label": "Sudoku", "type": "edit"},
-      {"icon": Icons.view_compact_alt, "label": "Word Finder", "type": "view"},
+    final puzzleGames = [
+      {
+        "icon": Icons.edit,
+        "label": "2048",
+        "onTap": () => _goTo(context, const Game2048Screen()),
+      },
+      {
+        "icon": Icons.merge,
+        "label": "Minesweeper",
+        "onTap": () => _goTo(context, GameActivity()),
+      },
+      {
+        "icon": Icons.edit_note,
+        "label": "Sudoku",
+        "onTap": () => _goTo(context, const SudokuGame()),
+      },
+      {
+        "icon": Icons.view_compact_alt,
+        "label": "Word Finder",
+        "onTap": () => _goTo(context, const MainPageIntro()),
+      },
     ];
 
-    final List<Map<String, dynamic>> toolsConvert = [
-      {"icon": Icons.image, "label": "Tic tac toe", "type": "pdftoimage"},
-      {"icon": Icons.device_hub, "label": "Piano Music", "type": "slip"},
-      {"icon": Icons.image, "label": "Tic tac toe", "type": "pdftoimage1"},
-      // {"icon": Icons.device_hub, "label": "Slip PDF", "type": "slip1"},
+    final casualGames = [
+      {
+        "icon": Icons.image,
+        "label": "Tic tac toe (1P)",
+        "onTap": () => _goTo(context, const LoginScreen(isSingleMode: true)),
+      },
+      {
+        "icon": Icons.device_hub,
+        "label": "Piano Music",
+        "onTap": () => _goTo(context, PianoGamePage(AppData.mainMusic)),
+      },
+      {
+        "icon": Icons.image,
+        "label": "Tic tac toe (2P)",
+        "onTap": () => _goTo(context, const LoginScreen(isSingleMode: false)),
+      },
     ];
 
     return Scaffold(
@@ -68,11 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text(
           'Games Offline',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.deepPurple,
       ),
@@ -82,20 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Puzzle Games',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              _buildGrid(tools),
-
+              _buildSectionTitle("Puzzle Games"),
+              _buildGrid(puzzleGames),
               const SizedBox(height: 28),
-              const Text(
-                'Casual Games',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              _buildGrid(toolsConvert),
+              _buildSectionTitle("Casual Games"),
+              _buildGrid(casualGames),
             ],
           ),
         ),
@@ -103,11 +114,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildGrid(List<Map<String, dynamic>> tools) {
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildGrid(List<Map<String, dynamic>> games) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: tools.length,
+      itemCount: games.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 16,
@@ -115,64 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        return _buildToolItem(
-          context,
-          tools[index]['label'],
-          tools[index]['icon'],
-          tools[index]['type'],
-        );
+        final game = games[index];
+        return _buildGameCard(game["label"], game["icon"], game["onTap"]);
       },
     );
   }
 
-  Widget _buildToolItem(
-    BuildContext context,
-    String label,
-    IconData iconData,
-    String type,
-  ) {
+  Widget _buildGameCard(String label, IconData iconData, VoidCallback onTap) {
     return GestureDetector(
-      onTap: () {
-        if (type == 'merge') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PianoGamePage(AppData.mainMusic),
-            ),
-          );
-        } else if (type == "sign") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Game2048Screen()),
-          );
-        } else if (type == "pdftoimage") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginScreen(isSingleMode: true),
-            ),
-          );
-        } else if (type == "view") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LoginScreen(isSingleMode: false),
-            ),
-          );
-        } else if (type == "slip") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => GameActivity()),
-          );
-        } else if (type == "pdftoimage1") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SudokuGame()),
-          );
-        } else {
-          _navigateToGamePage(context, 0);
-        }
-      },
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
@@ -182,50 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Icon(iconData, size: 36, color: Colors.blueAccent),
-                Container(
-                  margin: const EdgeInsets.only(top: 0),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: const Text(
-                    'PDF',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            Icon(iconData, size: 36, color: Colors.blueAccent),
             const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
+            Text(label, textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           ],
         ),
       ),
     );
   }
 
-  void _navigateToGamePage(BuildContext context, int index) async {
-    final int randomValue = random.nextInt(listCategoryDaily.length - 1);
-    print("value random $randomValue");
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MainPageIntro()),
-    );
-    setState(() {});
+  void _goTo(BuildContext context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => page));
   }
 }
